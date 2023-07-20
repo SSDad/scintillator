@@ -1,0 +1,57 @@
+clearvars
+
+Spot_0_params;
+
+% fn_SI = ['SpotInd_', ImgFolder, '.mat'];
+% data_SI = load(fn_SI);
+% TS = data_SI.TS;
+
+% SpotTable
+fn_ST = ['SpotTable_', ImgFolder, '.mat'];
+load(fn_ST);
+ind2 = TT.bS ==2;
+FL2 = TT.ffnL(ind2);
+cent = TT.cent(ind2);
+cc = cell2mat(cent);
+NumSpot = numel(FL2);
+
+% dxdy
+savepath = fullfile(MainPath, ImgFolder, 'ProcessedData');
+ffn = fullfile(savepath, 'SpotLocationMat.mat');
+% save(ffn, 'centP', '*Mean', '*Std', 'dx', 'dy');
+load(ffn);
+
+% SpotProfile
+savepath = fullfile(MainPath, ImgFolder, 'Spot');
+if ~exist(savepath, 'dir')
+    mkdir(savepath);
+end
+
+% each spot
+A = 100;  % crop size
+SpotIntensity = nan(NumSpot, 1);
+xfwhm = nan(NumSpot, 1);
+yfwhm = nan(NumSpot, 1);
+
+for n = 1%1:NumSpot
+    if mod(n, 10) == 0
+        disp(['Processing ', num2str(n), '/', num2str(NumSpot), '...']);
+    end
+
+    I = imread(FL2{n});
+    I = I(1+RowCut:end-RowCut, 1+ColCut:end-ColCut);
+
+    rect = [cc(n, 1)-A cc(n, 2)-A A*2 A*2];
+    C = imcrop(I, rect);
+
+    [SpotIntensity(n), xf, yf] = fun_measureSpot(C);
+    xfwhm(n) = xf*dx;
+    yfwhm(n) = yf*dy;
+end
+xcent = (cc(:, 1)-centX)*dx;
+ycent = (cc(:, 2)-centY)*dy;
+
+% TB = table(xcent, ycent, SpotIntensity, xfwhm, yfwhm);
+% savepath = fullfile(MainPath, ImgFolder, 'ProcessedData');
+% ffn = fullfile(savepath, 'OverlayMeasure.csv');
+% writetable(TB, ffn);
