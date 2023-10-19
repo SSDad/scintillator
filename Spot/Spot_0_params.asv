@@ -27,22 +27,11 @@ ImgFolder = 's1 - Copy';
 
 %%
 ProcessedDataPath = fullfile(MainPath, ImgFolder, 'ProcessedData');
-if ~exist(ProcessedDataPath, 'dir')
+if ~exist("ProcessedDataPath", 'dir')
     mkdir(ProcessedDataPath);
 end
-fn_ST = ['SpotTable.mat'];
-ffn_ST = fullfile(ProcessedDataPath, fn_ST);
-
-fn_SLP = ['SpotLocationPlot.png'];
-ffn_SLP = fullfile(ProcessedDataPath, fn_SLP);
-
 
 OverlayPath = fullfile(MainPath, ImgFolder, 'SpotOverlay');
-if ~exist(OverlayPath, 'dir')
-    mkdir(OverlayPath);
-end
-
-SpotPath = fullfile(MainPath, ImgFolder, 'Spot');
-if ~exist(SpotPath, 'dir')
-    mkdir(SpotPath);
+if ~exist("ProcessedDataPath", 'dir')
+    mkdir(ProcessedDataPath);
 end

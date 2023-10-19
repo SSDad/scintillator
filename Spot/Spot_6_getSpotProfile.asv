@@ -2,24 +2,14 @@ clearvars
 
 Spot_0_params;
 
-% fn_SI = ['SpotInd_', ImgFolder, '.mat'];
-% data_SI = load(fn_SI);
-% TS = data_SI.TS;
-
 % SpotTable
-fn_ST = ['SpotTable_', ImgFolder, '.mat'];
-load(fn_ST);
-ind2 = TT.bS ==2;
-ImgFile = TT.ffnL(ind2);
-cent = TT.cent(ind2);
-cc = cell2mat(cent);
-NumSpot = numel(ImgFile);
+load(ffn_ST);
 
-% dxdy
-procpath = fullfile(MainPath, ImgFolder, 'ProcessedData');
-ffn = fullfile(procpath, 'SpotLocationMat.mat');
-% save(ffn, 'centP', '*Mean', '*Std', 'dx', 'dy');
-load(ffn);
+
+ImgFile = TS.ffnL;
+cent = TS.cent;
+cc = cell2mat(cent);
+NSpot = numel(ImgFile);
 
 % SpotProfile
 spotpath = fullfile(MainPath, ImgFolder, 'Spot');
@@ -29,13 +19,13 @@ end
 
 % each spot
 A = 100;  % crop size
-SpotIntensity = nan(NumSpot, 1);
-xfwhm = nan(NumSpot, 1);
-yfwhm = nan(NumSpot, 1);
+SpotIntensity = nan(NSpot, 1);
+xfwhm = nan(NSpot, 1);
+yfwhm = nan(NSpot, 1);
 
-parfor n = 1:NumSpot
+parfor n = 1:NSpot
     if mod(n, 10) == 0
-        disp(['Processing ', num2str(n), '/', num2str(NumSpot), '...']);
+        disp(['Processing ', num2str(n), '/', num2str(NSpot), '...']);
     end
 
     I = imread(ImgFile{n});

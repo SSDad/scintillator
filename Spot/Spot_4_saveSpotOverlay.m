@@ -1,17 +1,8 @@
 clearvars
 
-% bMovie = 0;
-% bScatter = 1;
-
 Spot_0_params;
 
-OverlayPath = fullfile(MainPath, ImgFolder, 'SpotOverlay');
-if ~exist(OverlayPath, 'dir')
-    mkdir(OverlayPath);
-end
-
-fn_ST = ['SpotInd_', ImgFolder, '.mat'];
-load(fn_ST);
+load(ffn_ST);
 ind = TS.indSite;
 FL2 = TS.ffnL;
 
@@ -49,7 +40,7 @@ for n = 1:NumLoc
     hA.CLim = [min(J(:)) max(J(:))];
     hA.Title.String = [num2str(n)];
 
-    % ffn = fullfile(OverlayPath, ['SpotOverlay_', num2str(n), '.png']);
-    % saveas(hF, ffn);
+    ffn = fullfile(OverlayPath, ['SpotOverlay_', num2str(n), '.png']);
+    saveas(hF, ffn);
 
 end

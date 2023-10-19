@@ -1,0 +1,9 @@
+clearvars
+
+Spot_0_params;
+
+ffn = fullfile(SpotPath, 'SpotMeasure.csv');
+TB = readtable(ffn);
+
+hF = figure(1); clf
+plot(TB.xSigma, '.')

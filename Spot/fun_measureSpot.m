@@ -1,6 +1,6 @@
 function [SpotIntensity, xfwhm, yfwhm] = fun_measureSpot(J)
 
-bPlot = 1;
+bPlot = 0;
 
 if bPlot
     hF2 = figure; clf

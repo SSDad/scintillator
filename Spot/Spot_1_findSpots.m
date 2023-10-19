@@ -1,4 +1,4 @@
-clearvars
+ clearvars
 
 Spot_0_params;
 ImgPath = fullfile(MainPath, ImgFolder);
@@ -35,8 +35,7 @@ parfor n = 1:NumFile
 end
 
 TT = table(ffnL, bS, cent, rad);
-fn_ST = ['SpotTable_', ImgFolder, '.mat'];
-save(fn_ST, 'TT');
+save(ffn_ST, 'TT');
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % function    [cent, rad] = fun_findFitCircle(pp)

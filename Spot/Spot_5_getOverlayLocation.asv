@@ -18,8 +18,8 @@ cc = mean(centP);
 xx = centP(:, 1)-cc(1);
 yy = centP(:, 2)-cc(2);
 
-% dxy
 nShift = sqrt(NumSpot);
+% dxy
 xxs = sort(xx);
 nL = mean(xxs(end-nShift+1:end)) - mean(xxs(1:nShift));
 dx = XL/nL;
@@ -33,8 +33,6 @@ dy = YL/mL;
 centX = centP(idx0, 1);
 centY = centP(idx0, 2);
 
-save(ffn_ST, 'dx', 'dy', 'centX', 'centY', "-append");
-
 % x0
 [~, ia] = sort(abs(xx));
 indx0 = ia(1:sqrt(NumSpot));
@@ -43,14 +41,8 @@ xx0 = [];
 for n = 1:length(indx0)
     m = indx0(n);
     pp = cell2mat(T1{m}.cent);
-    xx = (pp(:, 1)-centX)*dx;
-    xx0 = [xx0; xx];
     xDev = [xDev; pp(:, 1) - centX];
 end
-hF = figure(1); clf
-hA = axes('parent', hF);
-hold(hA, 'on')
-plot(xx0, xDev, 'o')
 
 %y0
 [~, ia] = sort(abs(yy));
@@ -77,6 +69,7 @@ indy0 = ia(1:sqrt(NumSpot));
 % yStd = stdy'*dy;
 % SpotLocation.T = table(xMean, yMean, xStd, yStd);
 % 
+% save(ffn_ST, 'dx', 'dy', 'SpotLocation', "-append");
 
 % plot all point in mm
 hF = figure(2); clf
